@@ -3,7 +3,7 @@
 class Window
 {
 	private:
-		static const constexpr char* glsl_version = "#version 330";
+		static const constexpr char* glsl_version{ "#version 330" };
 		const struct flag {
 			int GLFW_Flag, State;
 		};
