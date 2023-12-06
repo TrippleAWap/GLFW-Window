@@ -45,7 +45,7 @@ static const char* getVKString(int VK)
 {
 	UINT scanCode = MapVirtualKey(VK, MAPVK_VK_TO_VSC);
 	char keyName[10];
-	int result = 0;
+	int result{0};
 	switch (VK) {
 	case VK_INSERT:
 	case VK_DELETE:
@@ -100,16 +100,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	// hide taskbar icon
 	SetWindowLong(glfwGetWin32Window(window->glfwWindow), GWL_EXSTYLE, WS_EX_TOOLWINDOW);
 	glfwShowWindow(window->glfwWindow);
-	ImGuiIO& io = ImGui::GetIO();
+	ImGuiIO& io{ImGui::GetIO()};
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard | ImGuiConfigFlags_NavEnableGamepad;
 	ImGui::StyleColorsDark();
-	bool running = true;
-	bool render = true;
+	bool running{true};
+	bool render{true};
 	window->states["interactable"] = true;
 	window->states["streamproof"] = false;
 	std::map<const char*, int> lastStates{};
-	ImFont* font1 = io.Fonts->AddFontFromFileTTF("bold_font.ttf", 30);
-	ImFont* font2 = io.Fonts->AddFontDefault();
+	ImFont* font1{io.Fonts->AddFontFromFileTTF("bold_font.ttf", 30)};
+	ImFont* font2{io.Fonts->AddFontDefault()};
 	float sliderValue{ 3.0f };
 	while (!glfwWindowShouldClose(window->glfwWindow) && running) {
 		window->NewFrame();
@@ -117,7 +117,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			lastStates["streamproof"] = window->states["streamproof"];
 			window->SetWindowAffinity(window->states["streamproof"] ? WDA_EXCLUDEFROMCAPTURE : WDA_NONE);
 		}
-		ImDrawList* drawList = ImGui::GetForegroundDrawList();
+		ImDrawList* drawList{ImGui::GetForegroundDrawList()};
 
 		if (GetAsyncKeyState(toggleKey) & 1) {
 			render = !render;
@@ -160,7 +160,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			ImGui::End();
 		}
 
-		const char* text = fstring("FPS: %.2f Time Per Frame: %.1fms", io.Framerate, io.DeltaTime * 1000);
+		const char* text{fstring("FPS: %.2f Time Per Frame: %.1fms", io.Framerate, io.DeltaTime * 1000)};
 		drawList->AddRectFilled(ImVec2(metrics->width - CalcTextSize(text).x - 5, 0), ImVec2(metrics->width, CalcTextSize(text).y), ImGui::GetColorU32(ImVec4(0.0f, 0.0f, 0.0f, 0.7f)));
 		drawList->AddText(ImVec2(metrics->width - CalcTextSize(text).x, 0), ImGui::GetColorU32(ImVec4(0.5f, 0.5f, 0.7f, 1.0f)), text);
 
